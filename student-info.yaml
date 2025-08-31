@@ -3,7 +3,7 @@ info:
   title: Sample API
   version: 1.0.0
 paths:
-  /studentInfo:
+  /studentInfo/students:
     get:
       summary: Get all students
       responses:
