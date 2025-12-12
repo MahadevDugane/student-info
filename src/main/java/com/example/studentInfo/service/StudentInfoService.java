@@ -25,7 +25,8 @@ public class StudentInfoService {
        repo.saveAndFlush(student);
     }
     public List<Students> getStudents() {
-        return repo.findAll();
+        throw new RuntimeException("exception occured.");
+       // return repo.findAll();
     }
     public List<StudentRank> getRankStandardwise(){
         return repo.getStudentRank();
