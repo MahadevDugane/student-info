@@ -1,5 +1,6 @@
 package com.example.studentInfo.controller;
 
+import com.example.studentInfo.service.InformationService;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,11 @@ import java.util.concurrent.ExecutionException;
 @RestController
 @RequestMapping("/forecast")
 public class InformationController {
+
+    InformationService service;
+    public InformationController(InformationService service){
+        this.service=service;
+    }
     @GetMapping("/weather")
     public String getWeatherInfo() throws URISyntaxException, ExecutionException, InterruptedException {
         CompletableFuture<Object> future = CompletableFuture.supplyAsync(()->{
@@ -25,6 +31,10 @@ public class InformationController {
                 throw new RuntimeException(e);
             }
             Object ob= template.exchange(uri, HttpMethod.GET,null,Object.class);
+
+            service.getWeatherInfo();
+            service.getWeatherInfo1();
+
             return ob.toString();
         });
         return future.get().toString();

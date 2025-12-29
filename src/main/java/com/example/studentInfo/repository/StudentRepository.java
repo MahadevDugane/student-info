@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface StudentRepository extends JpaRepository<Students, Integer> {
 
-    @Query(value = "select id,standard,name from students s1 where marks = (select max(marks) from students s2 where s1.standard=s2.standard) ",nativeQuery = true)
+    @Query(value = "select id,standard,marks,name from (\n" +
+            "select id,standard,marks,name,  ROW_NUMBER() over( partition by standard order by marks desc ) as rank_std from sys.student) ranking where rank_std<=3  ; ",nativeQuery = true)
     public List<StudentRank> getStudentRank();
 }
